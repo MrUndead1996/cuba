@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://sscaption"
+        messagesPack="com.itserv.taskchanger.web.screens">
+    <layout>
+        <hbox spacing="true" align="MIDDLE_CENTER">
+            <label value="String Sort" align="TOP_CENTER" width="auto"/>
+        </hbox>
+        <grid spacing="true" align="TOP_CENTER">
+            <columns count="2"/>
+            <rows>
+                <row>
+                    <label value="Enter words"/>
+                    <textField id="words"/>
+                </row>
+                <row>
+                    <label value="Enter parts"/>
+                    <textField id="parts"/>
+                </row>
+                <row>
+                    <label value="Result"/>
+                    <textField id="result" editable="false" datatype="string"/>
+                </row>
+                <row>
+                    <buttonsPanel>
+                        <button id="save" caption="Save"/>
+                        <button id="load" caption="Load"/>
+                        <button id="compute" caption="Compute"/>
+                    </buttonsPanel>
+                </row>
+            </rows>
+        </grid>
+    </layout>
+</window>

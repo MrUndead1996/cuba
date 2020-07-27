@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://caption"
+        messagesPack="com.itserv.taskchanger.web.screens">
+    <layout>
+        <vbox spacing="true" align="MIDDLE_CENTER" width="100%">
+            <label value="Format number" align="MIDDLE_CENTER"/>
+        </vbox>
+        <grid spacing="true" width="100%" align="MIDDLE_CENTER" responsive="true">
+            <columns count="2"/>
+            <rows>
+                <row>
+                    <label align="TOP_CENTER" value="Number"/>
+                    <textField id="number" align="TOP_CENTER"/>
+                    label/>
+                    textField/>
+                </row>
+                <row>
+                    <label align="TOP_CENTER" value="Result"/>
+                    <textField id="result" editable="false" align="TOP_CENTER"/>
+                </row>
+                <row>
+                    <buttonsPanel colspan="2" align="BOTTOM_CENTER">
+                        <button id="saveButton" caption="Save"/>
+                        <upload id="loadButton" caption="Load" showClearButton="true"/>
+                        <button id="computeButton" caption="Compute"/>
+                    </buttonsPanel>
+                </row>
+            </rows>
+        </grid>
+    </layout>
+</window>
