@@ -180,3 +180,5 @@ task buildWar(type: CubaWarBuilding) {
     includeJdbcDriver = true
     webXmlPath = 'modules/web/web/WEB-INF/single-war-web.xml'
 }
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
