@@ -7,7 +7,7 @@ import java.util.List;
 public interface SaveLoadService {
     String NAME = "taskchanger_SaveLoadService";
 
-    void save(String task, String path, String... args);
+    //File save(String task, String path, String... args);
 
     List<String> load(File file);
 

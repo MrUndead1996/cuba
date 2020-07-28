@@ -2,9 +2,7 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://caption"
         messagesPack="com.itserv.taskchanger.web.screens">
-    <data>
-        <instance id="uploadFile" class="com.itserv.taskchanger.entity.FileEntity" view="_local"/>
-    </data>
+
     <layout>
         <vbox spacing="true" align="MIDDLE_CENTER" width="100%">
             <label value="Format number" align="MIDDLE_CENTER"/>
@@ -14,20 +12,22 @@
             <rows>
                 <row>
                     <label align="TOP_CENTER" value="Number"/>
-                    <textField id="numberField" align="TOP_CENTER"/>
-                    label/>
-                    textField/>
+                    <textField id="numberField" align="TOP_CENTER">
+                        <validators>
+                            <positive message="Only numbers greaten 0"/>
+                        </validators>
+                    </textField>
                 </row>
                 <row>
                     <label align="TOP_CENTER" value="Result"/>
-                    <textField id="result" editable="false" align="TOP_CENTER"/>
+                    <textField id="resultField" editable="false" align="TOP_CENTER"/>
                 </row>
                 <row>
                     <buttonsPanel colspan="2" align="BOTTOM_CENTER">
-                        <button id="saveButton" caption="Save"/>
-                        <upload id="upFile"  permittedExtensions=".txt" caption="Load"
+                        <button id="saveButton" caption="Save" enable="false"/>
+                        <upload id="upFile"  permittedExtensions=".txt"
                         />
-                        <button id="computeButton" caption="Compute"/>
+                        <button id="computeButton" caption="Compute" enable="false"/>
                     </buttonsPanel>
                 </row>
             </rows>

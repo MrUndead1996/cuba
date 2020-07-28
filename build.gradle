@@ -169,7 +169,14 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
 restart.finalizedBy start
 
 task buildWar(type: CubaWarBuilding) {
-    appProperties = ['cuba.automaticDatabaseUpdate': true]
-    singleWar = false
+    appProperties = ['cuba.automaticDatabaseUpdate': true,
+                     'cuba.dataSource.jdbcUrl'     : 'jdbc:hsqldb:hsql://localhost/taskchanger',
+                     'cuba.dataSource.username'    : 'sa',
+                     'cuba.dataSource.password'    : '',
+                     'cuba.dataSource.dbName'      : 'taskchanger',
+                     'cuba.dataSource.host'        : 'localhost',
+                     'cuba.dataSource.port'        : '',
+                     'cuba.dataSourceProvider'     : 'application']
     includeJdbcDriver = true
+    webXmlPath = 'modules/web/web/WEB-INF/single-war-web.xml'
 }

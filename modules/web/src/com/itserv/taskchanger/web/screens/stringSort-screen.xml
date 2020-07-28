@@ -11,21 +11,29 @@
             <rows>
                 <row>
                     <label value="Enter words"/>
-                    <textField id="words"/>
+                    <textField id="wordsField">
+                        <validators>
+                            <notNull message="words null"/>
+                        </validators>
+                    </textField>
                 </row>
                 <row>
                     <label value="Enter parts"/>
-                    <textField id="parts"/>
+                    <textField id="partsField">
+                        <validators>
+                            <notNull message="parts null"/>
+                        </validators>
+                    </textField>
                 </row>
                 <row>
                     <label value="Result"/>
-                    <textField id="result" editable="false" datatype="string"/>
+                    <textField id="resultField" editable="false" datatype="string"/>
                 </row>
                 <row>
                     <buttonsPanel>
-                        <button id="save" caption="Save"/>
-                        <button id="load" caption="Load"/>
-                        <button id="compute" caption="Compute"/>
+                        <button id="saveButton" caption="Save" enable="false"/>
+                        <upload id="upFile"  permittedExtensions=".txt"/>
+                        <button id="computeButton" caption="Compute" enable="false"/>
                     </buttonsPanel>
                 </row>
             </rows>
