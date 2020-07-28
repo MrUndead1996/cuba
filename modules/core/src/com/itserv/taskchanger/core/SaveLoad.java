@@ -11,13 +11,13 @@ import java.util.List;
 public class SaveLoad {
     public static final String NAME = "taskchanger_SaveLoad";
 
-        /**
-         * Save current task and field values to file
-         *
-         * @param task value of current task
-         * @param args values to save
-         */
-        public void save(String task, String... args) throws IOException {
+    /**
+     * Save current task and field values to file
+     *
+     * @param task value of current task
+     * @param args values to save
+     */
+    public File save(String task, String... args) throws IOException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss"); //create fileName pattern
         File dir = new File("./save/"); // create
         dir.mkdirs();//  output directory
@@ -31,15 +31,16 @@ public class SaveLoad {
         }
         outputStream.flush();
         outputStream.close();
+        return file;
     }
 
-        /**
-         * Load task from file
-         *
-         * @param file TXT file for loading
-         * @return List<String> with task type and field values
-         */
-        public List<String> load(File file) throws IOException {
+    /**
+     * Load task from file
+     *
+     * @param file TXT file for loading
+     * @return List<String> with task type and field values
+     */
+    public List<String> load(File file) throws IOException {
         List<String> result = new LinkedList<>();
         BufferedReader reader = new BufferedReader(new FileReader(file));
         while (reader.ready()) {
@@ -49,4 +50,5 @@ public class SaveLoad {
         return result;
     }
 
-    }
+
+}

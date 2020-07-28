@@ -1,13 +1,8 @@
 package com.itserv.taskchanger.web.screens;
 
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.FileUploadField;
-import com.haulmont.cuba.gui.components.TextField;
-import com.haulmont.cuba.gui.components.TextInputField;
-import com.haulmont.cuba.gui.screen.Screen;
-import com.haulmont.cuba.gui.screen.Subscribe;
-import com.haulmont.cuba.gui.screen.UiController;
-import com.haulmont.cuba.gui.screen.UiDescriptor;
+import com.haulmont.cuba.core.entity.FileDescriptor;
+import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import com.itserv.taskchanger.service.NumberInExpandedFormService;
 import com.itserv.taskchanger.service.SaveLoadService;
@@ -15,24 +10,28 @@ import com.itserv.taskchanger.service.SaveLoadService;
 import javax.inject.Inject;
 import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 @UiController("taskchanger_Numberinexpandedform")
 @UiDescriptor("NumberInExpandedForm.xml")
 public class Numberinexpandedform extends Screen {
 
     @Inject
-    private TextField<String> result;
+    private TextField<String> result, numberField;
     @Inject
-    NumberInExpandedFormService service;
+    private NumberInExpandedFormService service;
     private String number;
     @Inject
-    private FileUploadField loadButton;
+    private SaveLoadService saveLoadService;
     @Inject
     private FileUploadingAPI fileUploadingAPI;
     @Inject
-    private SaveLoadService saveLoadService;
+    private FileUploadField upFile;
+    @Inject
+    private Button computeButton;
 
-    @Subscribe("number")
+
+    @Subscribe("numberField")
     public void onNumberTextChange(TextInputField.TextChangeEvent event) {
         number = event.getText();
     }
@@ -43,17 +42,29 @@ public class Numberinexpandedform extends Screen {
         result.setValue(answer);
     }
 
-    @Subscribe("loadButton")
-    public void onUploadFieldFileUploadSucceed(FileUploadField.FileUploadSucceedEvent event) {
-        File file = fileUploadingAPI.getFile(loadButton.getFileId());
-        if (file != null) {
-           List<String> args = saveLoadService.load(file);
-           number = args.get(1);
-        }
-    }
+
 
     @Subscribe("saveButton")
     public void onSaveButtonClick(Button.ClickEvent event) {
         saveLoadService.save(getClass().getSimpleName(),number);
+    }
+
+    @Install(to = "upFile", subject = "validator")
+    private void upFileValidator(FileDescriptor fileDescriptor) {
+        if (!fileDescriptor.getName().contains(getClass().getSimpleName()))
+            throw new ValidationException("wrong");
+
+    }
+
+
+    @Subscribe("upFile")
+    public void onUpFileFileUploadSucceed(FileUploadField.FileUploadSucceedEvent event) {
+        UUID fileId = upFile.getFileId();
+        File file = fileUploadingAPI.getFile(fileId);
+        List<String> args = saveLoadService.load(file);
+        args.forEach(System.out::println);
+        numberField.setValue(args.get(1));
+        number = (args.get(1));
+        onComputeClick(new Button.ClickEvent(computeButton));
     }
 }
