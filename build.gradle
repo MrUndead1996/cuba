@@ -1,15 +1,13 @@
-
 buildscript {
     ext.cubaVersion = '7.2.7'
     repositories {
         maven {
             url 'https://dl.bintray.com/cuba-platform/main'
-            
+
         }
         jcenter()
 
 
-        
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
@@ -38,7 +36,7 @@ dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
 }
 
-def hsql = 'org.hsqldb:hsqldb:2.4.1'
+def postgres = 'org.postgresql:postgresql:42.2.9'
 
 configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'java')
@@ -46,10 +44,10 @@ configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'cuba')
 
     dependencies {
-            testCompile('org.junit.jupiter:junit-jupiter-api:5.5.2')
-            testCompile('org.junit.jupiter:junit-jupiter-engine:5.5.2')
-            testCompile('org.junit.vintage:junit-vintage-engine:5.5.2')  
-        }
+        testCompile('org.junit.jupiter:junit-jupiter-api:5.5.2')
+        testCompile('org.junit.jupiter:junit-jupiter-engine:5.5.2')
+        testCompile('org.junit.vintage:junit-vintage-engine:5.5.2')
+    }
 
     task sourceJar(type: Jar) {
         from file('src')
@@ -58,7 +56,7 @@ configure([globalModule, coreModule, webModule]) {
 
     artifacts {
         archives sourceJar
-    } 
+    }
     test {
         useJUnitPlatform()
     }
@@ -90,8 +88,8 @@ configure(coreModule) {
     dependencies {
         compile(globalModule)
         compileOnly(servletApi)
-        jdbc(hsql)
-        testRuntime(hsql)
+        jdbc(postgres)
+        testRuntime(postgres)
     }
 
     task cleanConf(description: 'Cleans up conf directory', type: Delete) {
@@ -169,16 +167,8 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
 restart.finalizedBy start
 
 task buildWar(type: CubaWarBuilding) {
-    appProperties = ['cuba.automaticDatabaseUpdate': true,
-                     'cuba.dataSource.jdbcUrl'     : 'jdbc:hsqldb:hsql://localhost/taskchanger',
-                     'cuba.dataSource.username'    : 'sa',
-                     'cuba.dataSource.password'    : '',
-                     'cuba.dataSource.dbName'      : 'taskchanger',
-                     'cuba.dataSource.host'        : 'localhost',
-                     'cuba.dataSource.port'        : '',
-                     'cuba.dataSourceProvider'     : 'application']
+    appProperties = ['cuba.automaticDatabaseUpdate': true]
     includeJdbcDriver = true
     webXmlPath = 'modules/web/web/WEB-INF/single-war-web.xml'
 }
 task stage(dependsOn: ['build', 'clean'])
-build.mustRunAfter clean

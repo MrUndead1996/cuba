@@ -2,5 +2,15 @@
 
     <!-- Switch off session serialization -->
     <Manager pathname=""/>
-
+    <Resource
+            name="jdbc/CubaDS"
+            type="javax.sql.DataSource"
+            maxTotal="20"
+            maxIdle="2"
+            maxWaitMillis="5000"
+            driverClassName="org.postgresql.Driver"
+            url="postgres://hmkbosjaybjfjo:8da102034991b1d64e6bbee55239d0bfce8c59ce50d99fb37ad38ebf434b87bf@ec2-35-175-155-248.compute-1.amazonaws.com:5432/dej2hvfk4pa03n
+"
+            username="hmkbosjaybjfjo"
+            password="8da102034991b1d64e6bbee55239d0bfce8c59ce50d99fb37ad38ebf434b87bf"/>
 </Context>
